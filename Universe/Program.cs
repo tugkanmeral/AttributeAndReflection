@@ -14,42 +14,52 @@ namespace Universe
         static void Main(string[] args)
         {
             IRepository<User> userRepo = new UserRepository();
-            IRepository<UserTest> userTestRepo = new UserTestRepository();
 
-            Thread.Sleep(3000);
-            double totalDiffOne = 0;
-            double totalDiffTwo = 0;
-            int counter = 0;
+            var tugkan = new User() { Name = "Tuğkan", Surname = "Meral", TCKN = "99999999999" };
+            userRepo.Add(tugkan);
 
-            for (int i = 1; i < 12; i++)
-            {
-                Console.WriteLine($"i = {i}");
-                var tOne = DateTime.Now;
-                var user = userRepo.Get(p => p.Id == i);
-                var tTwo = DateTime.Now;
+            var user = userRepo.Get(u => u.TCKN == tugkan.TCKN);
 
-                var tThree = DateTime.Now;
-                var userTest = userTestRepo.GetTest(p => p.Id == i);
-                var tFour = DateTime.Now;
+            Console.WriteLine($"{user.Name} {user.Surname}");
+            Console.WriteLine($"TCKN: {user.TCKN}");
+            
 
-                var diffOne = (tTwo - tOne).TotalMilliseconds;
-                var diffTwo = (tFour - tThree).TotalMilliseconds;
+            // UNCOMMENT BELOW TO CHECK OVER RUN DURATION
+            //IRepository<UserTest> userTestRepo = new UserTestRepository();
+            //Thread.Sleep(3000);
+            //double totalDiffOne = 0;
+            //double totalDiffTwo = 0;
+            //int counter = 0;
 
-                if (i > 3)
-                {
-                    totalDiffOne += diffOne;
-                    totalDiffTwo += diffTwo;
-                    counter++;
-                }
+            //for (int i = 1; i < 12; i++)
+            //{
+            //    Console.WriteLine($"i = {i}");
+            //    var tOne = DateTime.Now;
+            //    var user = userRepo.Get(p => p.Id == i);
+            //    var tTwo = DateTime.Now;
 
-                Console.WriteLine($"Reflection ile Get() : \t\t{diffOne}ms");
-                Console.WriteLine($"Direkt Get() : \t\t\t{diffTwo}ms");
-                Console.WriteLine($"\n");
-            }
+            //    var tThree = DateTime.Now;
+            //    var userTest = userTestRepo.GetTest(p => p.Id == i);
+            //    var tFour = DateTime.Now;
 
-            Console.WriteLine("TOTAL");
-            Console.WriteLine($"Reflection ile Get() : \t\t\t{totalDiffOne / counter}");
-            Console.WriteLine($"Direkt Get() : \t\t\t{totalDiffTwo / counter}");
+            //    var diffOne = (tTwo - tOne).TotalMilliseconds;
+            //    var diffTwo = (tFour - tThree).TotalMilliseconds;
+
+            //    if (i > 3)
+            //    {
+            //        totalDiffOne += diffOne;
+            //        totalDiffTwo += diffTwo;
+            //        counter++;
+            //    }
+
+            //    Console.WriteLine($"Reflection ile Get() : \t\t{diffOne}ms");
+            //    Console.WriteLine($"Direkt Get() : \t\t\t{diffTwo}ms");
+            //    Console.WriteLine($"\n");
+            //}
+
+            //Console.WriteLine("TOTAL");
+            //Console.WriteLine($"Reflection ile Get() : \t\t\t{totalDiffOne / counter}");
+            //Console.WriteLine($"Direkt Get() : \t\t\t{totalDiffTwo / counter}");
         }
     }
 }
